@@ -1,0 +1,29 @@
+name: Supabase Keep Alive
+
+on:
+  schedule:
+    # 매일 한국 시간 오전 9시 (UTC 00:00)에 실행
+    - cron: '0 0 * * *'
+  workflow_dispatch: # 필요할 때 수동으로 즉시 실행 가능
+
+jobs:
+  ping-supabase:
+    runs-on: ubuntu-latest
+    steps:
+      # 첫 번째 프로젝트 생존 신고
+      - name: Ping Project 1
+        run: |
+          curl -X GET "${{ secrets.SUPABASE_URL_1 }}/rest/v1/" \
+          -H "apikey: ${{ secrets.SUPABASE_KEY_1 }}" \
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY_1 }}"
+          echo "Project 1 pinged successfully."
+
+      # 두 번째 프로젝트 생존 신고
+      # - name: Ping Project 2
+        # run: |
+          # curl -X GET "${{ secrets.SUPABASE_URL_2 }}/rest/v1/" \
+          # -H "apikey: ${{ secrets.SUPABASE_KEY_2 }}" \
+          # -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY_2 }}"
+          # echo "Project 2 pinged successfully."
+      
+      # 이후에 필요한 만큼 추가 
