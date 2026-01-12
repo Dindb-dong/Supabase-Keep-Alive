@@ -1,5 +1,8 @@
 name: Supabase Keep Alive
 
+# create table if not exists keep_alive (id int primary key);
+# keep_alive 라는 이름으로 테이블 만들어두어야 함.
+
 on:
   schedule:
     # 매일 한국 시간 오전 9시 (UTC 00:00)에 실행
@@ -13,7 +16,7 @@ jobs:
       # 첫 번째 프로젝트 생존 신고
       - name: Ping Project 1
         run: |
-          curl -X GET "${{ secrets.SUPABASE_URL_1 }}/rest/v1/" \
+          curl -X GET "${{ secrets.SUPABASE_URL_1 }}/rest/v1/keep_alive?select=*" \
           -H "apikey: ${{ secrets.SUPABASE_KEY_1 }}" \
           -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY_1 }}"
           echo "Project 1 pinged successfully."
@@ -21,7 +24,7 @@ jobs:
       # 두 번째 프로젝트 생존 신고
       # - name: Ping Project 2
         # run: |
-          # curl -X GET "${{ secrets.SUPABASE_URL_2 }}/rest/v1/" \
+          # curl -X GET "${{ secrets.SUPABASE_URL_2 }}/rest/v1/keep_alive?select=*" \
           # -H "apikey: ${{ secrets.SUPABASE_KEY_2 }}" \
           # -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY_2 }}"
           # echo "Project 2 pinged successfully."
